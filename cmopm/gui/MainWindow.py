@@ -259,7 +259,6 @@ class CMOPMMainWindow(QtGui.QMainWindow):
         '''
 
         if QtGui.QMessageBox.question(self, 'Confirm', "Are you sure you want to quit?", QtGui.QMessageBox.Yes | QtGui.QMessageBox.No, QtGui.QMessageBox.No) == QtGui.QMessageBox.Yes:
-            log.debug("Closing")
             event.accept()
         else:
             event.ignore()
