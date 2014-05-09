@@ -1,4 +1,4 @@
-CMOPM | by @ashbyb
+CMOPM | by [@ashbyb](https://github.com/ashbyb)
 ---
 Custom Maid Online Packet Manipulator (CMOPM) is a tool to play with the packet flow of the custom maid online program.
 
