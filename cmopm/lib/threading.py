@@ -189,3 +189,49 @@ class threadIdSpooler(QtCore.QObject):
     def returnID(self):
         returningID = self.sender().id
         self.pool.put_nowait(returningID)
+
+class threadManager(QtCore.QObject):
+    children = dict()
+    def __init__(self, parent):
+        super(threadManager, self).__init__(parent)
+        self.parent = parent
+
+    def adopt(self, thread):
+        ''' threadManager adopts thread '''
+
+        try:
+            _id = thread.id
+            if _id is None:
+                raise AttributeError
+        except AttributeError:
+            log.exception("Thread was supplied with no id")
+            raise ThreadMissingID
+        else:
+            if _id not in self.children.keys() or self.children[_id] is None:
+                # Set if not set
+                log.debug("Manager adopts thread #%d" % _id)
+                self.children[_id] = thread
+            elif self.children[_id] != thread:
+                # Overwrite current thread
+                log.debug("Manager adopts thread #%d. Overwrites thread #%d" % (_id, self.children[_id].id))
+                self.children[_id] = thread
+            else:
+                # Already adopted this thread.
+                log.debug("Can not adopt thread #%d, already adopted." % _id)
+
+    def release(self, _id):
+        ''' threadManager stops managing thread with id _id '''
+
+        try:
+            del self.children[_id]
+        except KeyError:
+            # Catch, note, but don't raise
+            log.debug("treadManager was told to release thread #%d but didn't have that thread to release." % _id)
+
+    def getThread(self, _id=None, thread=None):
+        ''' returns a reference to a thread that is being managed if possible, else None. Can look against _ids or thread objects '''
+
+        pass
+        # TODO: What am I trying to do here?
+
+

@@ -54,20 +54,16 @@ class CMOPMMainWindow(QtGui.QMainWindow):
         # Create class to maintain / distribute unique thread IDs
         self.threadIdSpooler = threadIdSpooler(self)
 
-        # Set Default sorting
+        # Style: Set Default sorting
         # TODO: Default column widths
         self.ui.treeWidget_log.sortItems(7, 1)
 
-        # Bind mouse move to hover event
-        QtCore.QObject.connect(self.ui.treeWidget_log, QtCore.SIGNAL("mouseMoveEvent()"), self.handleTreeWidgetMouseMoveEvent)
+        # Event bindings
+        QtCore.QObject.connect(self.ui.checkBox_drop_outgoing, QtCore.SIGNAL("stateChanged(int)"), self.on_checkBox_drop_outgoing_stateChanged)
+        QtCore.QObject.connect(self.ui.checkBox_drop_incoming, QtCore.SIGNAL("stateChanged(int)"), self.on_checkBox_drop_incoming_stateChanged)
 
         # Log startup
         log.debug("Starting")
-
-    def handleTreeWidgetMouseMoveEvent(self, event):
-        ''' Hover event '''
-
-        print "Test"
 
     @QtCore.pyqtSignature("")
     def on_actionUser_Guide_triggered(self,):
@@ -144,10 +140,10 @@ class CMOPMMainWindow(QtGui.QMainWindow):
             self.aCMOPMThread.register()
         except InterpreterArchitectureMisMatch:
             log.exception("System architecture does not match python interpreter architecture. Must match to be able to register the WinDivert .dll")
-            QtGui.QMessageBox.critical(self, 'Notice | Architecture Mismatch', "This executable and Windows' architecture don't match!\nRun 64bit if Windows is 64bit, else 32bit.", QtGui.QMessageBox.Ok)
+            QtGui.QMessageBox.critical(self, 'Notice | Architecture Mismatch', "<html><head/><body><p><span style=\" font-weight:600;\">Failure to register packet capture driver due to architecture mis-match.</span></p><p>There is a mis-match between the architecture of the currently executing python interpreter and the underlying operating system. The architectures <span style=\" font-style:italic;\">must</span> match for the interpreter to be able to install the packet capture driver.</p><p>If your operating system architecture is 64-bit then you must run this program using a 64-bit python interpreter. The same restriction applies for a 32-bit operating system architecture.</p></body></html>", QtGui.QMessageBox.Ok)
         except RequireElevatedPrivileges:
             log.exception("Need elevated privileges to be able to install WinDivert .dll")
-            QtGui.QMessageBox.critical(self, 'Notice | Elevated Privileges', "This program needs elevated privileges to manipulate packets (not surprisingly).\nRun as Administrator.", QtGui.QMessageBox.Ok)
+            QtGui.QMessageBox.critical(self, 'Notice | Elevated Privileges', "<html><head/><body><p><span style=\" font-weight:600;\">Failure to perform driver registration due to lack of rights.</span></p><p>This program needs to install a packet capture driver that can intercept, read, modify, and inject packets. Understandably, this is a major security risk if installed by any executing program (or malware). Thus, administrator rights / elevated privileges are required to install the packet capture driver.</p><p>Run this program with administrator rights / elevated privileges.</p></body></html>", QtGui.QMessageBox.Ok)
         except Exception:
             log.exception("Unhandled Error Seen.")
         else:
@@ -251,6 +247,23 @@ class CMOPMMainWindow(QtGui.QMainWindow):
         item.setBackground(0, QtGui.QBrush(color))
         item.setToolTip(6, payload)
         item.setToolTip(1, comment)
+
+    @QtCore.pyqtSignature("")
+    def on_checkBox_drop_outgoing_stateChanged(self, state):
+        ''' SLOT. Called when the checkbox for dropping outgoing packets changes states '''
+
+        log.debug("CheckBox Drop Outbound: %d" % state)
+        if state is 2:
+            pass
+            #self.
+        else:
+            pass
+
+    @QtCore.pyqtSignature("")
+    def on_checkBox_drop_incoming_stateChanged(self, state):
+        ''' SLOT. Called when the checkbox for dropping incoming packets changes states '''
+
+        log.debug("CheckBox Drop Inbound: %d" % state)
 
     def closeEvent(self, event):
         '''

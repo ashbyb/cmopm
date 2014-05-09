@@ -50,6 +50,8 @@ class PacketSniffer(QObject):
     interface = None
     countPacketsCaptured = 0
     _filter="ip and (ip.DstAddr == %s or ip.SrcAddr == %s)"
+    dropOutbound = False
+    dropInbound = False
 
     def __init__(self, parent, server_ip=None, dll=None, running=True, priority=1000):
         ''' consructor, set variables '''
@@ -143,8 +145,12 @@ class PacketSniffer(QObject):
                     if len(payload) is not 0:
                         self.tcp.checkPacket(payload)
 
-                    # Send Packet on its way
-                    handle.send(packet)
+                    # Send Packet on its way, if allowed
+                    if self.outbound and not self.dropOutbound:
+                        handle.send(packet)
+                    elif not self.outbound and not self.dropInbound:
+                        handle.send(packet)
+
                     
                 handle.close()
 
