@@ -1,0 +1,32 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>../../images/icons/barcode.ico</file>
+    <file>../../images/icons/Gnome-Help-Faq.ico</file>
+    <file>../../images/icons/Gnome-System-Lock-Screen.ico</file>
+    <file>../../images/icons/Gnome-Mail-Send-Receive.ico</file>
+    <file>../../images/icons/Gnome-Utilities-System-Monitor.ico</file>
+    <file>../../images/icons/collect.png</file>
+    <file>../../images/icons/folder_search.png</file>
+    <file>../../images/icons/time.png</file>
+    <file>../../images/icons/dot_color.png</file>
+    <file>../../images/icons/cog.png</file>
+    <file>../../images/icons/down.png</file>
+    <file>../../images/icons/search.png</file>
+    <file>../../images/icons/database_refresh.png</file>
+    <file>../../images/icons/down_unknown.png</file>
+    <file>../../images/icons/toolkit.png</file>
+    <file>../../images/icons/settings.png</file>
+    <file>../../images/icons/error.png</file>
+    <file>../../images/icons/1-32.png</file>
+    <file>../../images/icons/2-32.png</file>
+    <file>../../images/icons/3-32.png</file>
+    <file>../../images/icons/exit.png</file>
+    <file>../../images/icons/information.png</file>
+  </qresource>
+  <qresource prefix="images">
+    <file>../../images/image_v1.png</file>
+    <file>../../images/megurine-luka1.gif</file>
+    <file>../../images/logo_v3.png</file>
+    <file>../../images/hatsune-miku.gif</file>
+  </qresource>
+</RCC>

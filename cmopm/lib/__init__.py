@@ -1,0 +1,6 @@
+__title__ = 'cmopm'
+__version__ = '0.0.1'
+__author__ = 'Brendan Ashby'
+__email__ = 'brendanevansashby@gmail.com'
+__license__ = 'CC BY-NC-SA 4.0'
+__copyright__ = 'Copyright 2014 Brendan Ashby'
